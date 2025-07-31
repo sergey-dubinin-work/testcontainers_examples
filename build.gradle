@@ -9,11 +9,16 @@ repositories {
 
 def jUnitVersion = '5.8.1',
     assertJVersion = "4.0.0-M1",
-    tcPostgreSQLVersion = "1.21.3"
+    postgreJDBCVersion = "42.7.7",
+    testContainerPostgreSQLVersion = "1.21.3",
+    flyWayVersion = "11.10.4"
 
 dependencies {
     implementation(
-            "org.testcontainers:postgresql:$tcPostgreSQLVersion"
+            "org.postgresql:postgresql:$postgreJDBCVersion",
+            "org.testcontainers:postgresql:$testContainerPostgreSQLVersion",
+            "org.flywaydb:flyway-core:$flyWayVersion",
+            "org.flywaydb:flyway-database-postgresql:$flyWayVersion"
     )
     testImplementation (
             "org.junit.jupiter:junit-jupiter:$jUnitVersion",
