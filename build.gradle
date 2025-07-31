@@ -1,0 +1,38 @@
+plugins{
+    id 'java-library'
+    id 'io.freefair.lombok' version "8.14"
+}
+
+repositories {
+    mavenCentral()
+}
+
+def jUnitVersion = '5.8.1',
+    assertJVersion = "4.0.0-M1",
+    tcPostgreSQLVersion = "1.21.3"
+
+dependencies {
+    implementation(
+            "org.testcontainers:postgresql:$tcPostgreSQLVersion"
+    )
+    testImplementation (
+            "org.junit.jupiter:junit-jupiter:$jUnitVersion",
+            "org.slf4j:slf4j-simple:2.0.17",
+            "org.assertj:assertj-core:$assertJVersion",
+    )
+    testRuntimeOnly (
+            "org.junit.jupiter:junit-jupiter-engine:$jUnitVersion"
+    )
+}
+
+tasks.withType(Test).configureEach{
+    useJUnitPlatform()
+    systemProperties(System.getProperties())
+
+    testLogging {
+        lifecycle {
+            events( "started", "skipped", "failed", "standard_error", "standard_out")
+            exceptionFormat "short"
+        }
+    }
+}
